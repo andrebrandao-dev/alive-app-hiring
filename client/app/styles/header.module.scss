@@ -1,0 +1,32 @@
+.wrap {
+  @apply 
+    bg-transparent 
+    flex items-center 
+    py-3 
+    px-4 
+    justify-between
+}
+
+.searchIcon {
+  @apply
+    absolute 
+    top-1/2 
+    left-3 
+    transform 
+    -translate-y-1/2 
+    text-gray-500
+}
+
+.searchInput {
+  @apply
+    w-64 
+    px-10 
+    py-2 
+    text-sm 
+    text-gray-700 
+    bg-white 
+    rounded-md 
+    focus:outline-none 
+    focus:border-blue-500
+    appearance-none
+}

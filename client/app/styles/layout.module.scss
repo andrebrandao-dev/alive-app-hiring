@@ -1,0 +1,22 @@
+@import './custom-variables.scss';
+
+.layout {
+  padding-left: $sidebar-size;
+  @apply py-4 pr-4
+}
+
+.main {
+  @apply py-8 px-4
+}
+
+.background {
+  background-image: url('../images/backrgound.png');
+  @apply
+    fixed
+    inset-0
+    z-0
+    bg-cover
+    bg-no-repeat
+    blur-md
+    opacity-10
+}

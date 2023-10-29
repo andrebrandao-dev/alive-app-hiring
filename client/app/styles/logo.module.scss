@@ -1,0 +1,13 @@
+.logoText {
+  @apply
+    ml-2 
+    py-2 
+    bg-clip-text
+    font-bold 
+    text-transparent 
+    transition-all
+    bg-gradient-to-r from-cyan-600 to-cyan-950
+    hover:bg-gradient-to-l 
+    hover:from-cyan-600 
+    hover:to-cyan-950
+}
