@@ -5,6 +5,7 @@ import { SearchService } from './services/search.service';
 import { QuoteService } from './services/quote.service';
 import url from './url_api';
 import { HistoryService } from './services/history.service';
+import { GainLossService } from './services/gainloss.service';
 
 @Module({
   imports: [
@@ -13,6 +14,6 @@ import { HistoryService } from './services/history.service';
     }),
   ],
   controllers: [DashboardController],
-  providers: [SearchService, QuoteService, HistoryService],
+  providers: [SearchService, QuoteService, HistoryService, GainLossService],
 })
 export class DashboardModule {}

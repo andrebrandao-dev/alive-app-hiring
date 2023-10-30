@@ -7,6 +7,8 @@ import { SymbolDTO } from './dto/symbol.dto';
 import { HttpModule } from '@nestjs/axios';
 import api from './url_api';
 import { GetHistoryDTO } from './dto/history.dto';
+import { GetGainLoss } from './dto/gainloss';
+import { GainLossService } from './services/gainloss.service';
 
 describe('DashboardController', () => {
   let dashboardController: DashboardController;
@@ -19,7 +21,7 @@ describe('DashboardController', () => {
         }),
       ],
       controllers: [DashboardController],
-      providers: [SearchService, QuoteService, HistoryService],
+      providers: [SearchService, QuoteService, HistoryService, GainLossService],
     }).compile();
 
     dashboardController = module.get<DashboardController>(DashboardController);
@@ -122,6 +124,50 @@ describe('DashboardController', () => {
       expect(result[0].low).toBe('179.0100');
       expect(result[0].close).toBe('179.6900');
       expect(result[0].volume).toBe('4606334');
+    });
+  });
+
+  describe('gainloss', () => {
+    it('should return invalid symbol', async () => {
+      const symbol: string = '';
+      const getHistory: GetGainLoss = {
+        date_consulting: '10-27-2023',
+      };
+      const { response } = await dashboardController.gainLoss(
+        symbol,
+        getHistory,
+      );
+
+      expect(response.message).toBe('Symbol should not be empty');
+      expect(response.error).toBe('Bad Request');
+      expect(response.statusCode).toBe(400);
+    });
+
+    it('should return invalid consulting date', async () => {
+      const symbol: string = 'BA';
+      const getHistory: GetGainLoss = {
+        date_consulting: '27-10-2023',
+      };
+      const { response } = await dashboardController.gainLoss(
+        symbol,
+        getHistory,
+      );
+
+      expect(response.message).toBe('Invalid consulting date');
+      expect(response.error).toBe('Bad Request');
+      expect(response.statusCode).toBe(400);
+    });
+
+    it('should return a gainlossDTO', async () => {
+      const symbol: string = 'BA';
+      const getHistory: GetGainLoss = {
+        date_consulting: '10-27-2023',
+      };
+      const result = await dashboardController.gainLoss(symbol, getHistory);
+
+      expect(result.current).toBe('179.6900');
+      expect(result.consulting).toBe('179.6900');
+      expect(result.gain).toBe(false);
     });
   });
 });
