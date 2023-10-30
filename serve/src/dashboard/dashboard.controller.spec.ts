@@ -4,7 +4,7 @@ import { QuoteService } from './services/quote.service';
 import { SearchService } from './services/search.service';
 import { SymbolDTO } from './dto/symbol.dto';
 import { HttpModule } from '@nestjs/axios';
-const apikey = 'N4KXLQI4AHXW2N75';
+import api from './api';
 
 describe('DashboardController', () => {
   let dashboardController: DashboardController;
@@ -13,7 +13,7 @@ describe('DashboardController', () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         HttpModule.register({
-          baseURL: `https://www.alphavantage.co/query?apikey=${apikey}`,
+          baseURL: api,
         }),
       ],
       controllers: [DashboardController],

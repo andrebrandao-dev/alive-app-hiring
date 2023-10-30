@@ -3,12 +3,12 @@ import { DashboardController } from './dashboard.controller';
 import { HttpModule } from '@nestjs/axios';
 import { SearchService } from './services/search.service';
 import { QuoteService } from './services/quote.service';
-const apikey = 'N4KXLQI4AHXW2N75';
+import api from './api';
 
 @Module({
   imports: [
     HttpModule.register({
-      baseURL: `https://www.alphavantage.co/query?apikey=${apikey}`,
+      baseURL: api,
     }),
   ],
   controllers: [DashboardController],
