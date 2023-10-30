@@ -1,2 +1,6 @@
 ### Serch
 GET http://localhost:3030/dashboard/search/ba
+
+### Quote
+GET http://localhost:3030/dashboard/quote/BA
+

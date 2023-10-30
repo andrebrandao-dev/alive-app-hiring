@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { DashboardController } from './dashboard.controller';
+import { QuoteService } from './services/quote.service';
 import { SearchService } from './services/search.service';
 import { SymbolDTO } from './dto/symbol.dto';
 import { HttpModule } from '@nestjs/axios';
@@ -16,7 +17,7 @@ describe('DashboardController', () => {
         }),
       ],
       controllers: [DashboardController],
-      providers: [SearchService],
+      providers: [SearchService, QuoteService],
     }).compile();
 
     dashboardController = module.get<DashboardController>(DashboardController);
@@ -39,21 +40,21 @@ describe('DashboardController', () => {
     });
   });
 
-  /* describe('quote', () => {
-    it('should return a quoteDTO', () => {
+  describe('quote', () => {
+    it('should return a quoteDTO', async () => {
       const symbol: string = 'BA';
-      const result = dashboardController.quote(symbol);
+      const result = await dashboardController.quote(symbol);
 
       expect(result.symbol).toBe('BA');
-      expect(result.open).toBe('241.0000');
-      expect(result.high).toBe('242.0000');
-      expect(result.low).toBe('238.0000');
-      expect(result.price).toBe('240.0000');
-      expect(result.volume).toBe('123456');
-      expect(result.latestTradingDay).toBe('2021-05-21');
-      expect(result.previousClose).toBe('239.0000');
-      expect(result.change).toBe('1.0000');
-      expect(result.changePercent).toBe('0.0042%');
+      expect(result.open).toBe('180.0000');
+      expect(result.high).toBe('182.3299');
+      expect(result.low).toBe('179.0100');
+      expect(result.price).toBe('179.6900');
+      expect(result.volume).toBe('4606334');
+      expect(result.latestTradingDay).toBe('2023-10-27');
+      expect(result.previousClose).toBe('179.0900');
+      expect(result.change).toBe('0.6000');
+      expect(result.changePercent).toBe('0.3350%');
     });
-  }); */
+  });
 });

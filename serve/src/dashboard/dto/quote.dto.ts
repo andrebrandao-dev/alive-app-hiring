@@ -11,7 +11,7 @@ export type QuoteProps = {
   changePercent: string;
 };
 
-export class DuoteDTO {
+export class QuoteDTO {
   constructor(props: QuoteProps) {
     Object.assign(this, props);
   }

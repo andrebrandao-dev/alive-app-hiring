@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
 import { DashboardController } from './dashboard.controller';
-import { SearchService } from './services/search.service';
 import { HttpModule } from '@nestjs/axios';
+import { SearchService } from './services/search.service';
+import { QuoteService } from './services/quote.service';
 const apikey = 'N4KXLQI4AHXW2N75';
 
 @Module({
@@ -11,6 +12,6 @@ const apikey = 'N4KXLQI4AHXW2N75';
     }),
   ],
   controllers: [DashboardController],
-  providers: [SearchService],
+  providers: [SearchService, QuoteService],
 })
 export class DashboardModule {}
