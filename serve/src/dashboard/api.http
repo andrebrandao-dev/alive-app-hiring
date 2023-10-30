@@ -1,3 +1,5 @@
+### N4KXLQI4AHXW2N75
+
 ### Serch
 GET http://localhost:3030/dashboard/search/ba
 
@@ -6,3 +8,6 @@ GET http://localhost:3030/dashboard/quote/BA
 
 ### Quote History
 GET http://localhost:3030/dashboard/history/BA?start_date=10-27-2023&end_date=10-27-2023
+
+###
+GET https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=IBM&apikey=N4KXLQI4AHXW2N75

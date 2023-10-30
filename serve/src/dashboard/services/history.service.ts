@@ -11,11 +11,9 @@ export class HistoryService {
     const response = await this.httpService.axiosRef.get(
       `&function=TIME_SERIES_DAILY&symbol=${symbol}`,
     );
-    console.log(getHistory.start_date, getHistory.end_date);
 
     const startDate = moment(getHistory.start_date, 'MM/DD/YYYY');
     const endDate = moment(getHistory.end_date, 'MM/DD/YYYY');
-
     const dates = response.data['Time Series (Daily)'];
 
     const filteredDates = Object.entries(dates)

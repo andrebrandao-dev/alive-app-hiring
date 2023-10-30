@@ -10,7 +10,6 @@ export class SearchService {
     const response = await this.httpService.axiosRef.get(
       `&function=SYMBOL_SEARCH&keywords=${keywords}`,
     );
-
     const symbols: SymbolDTO[] = [];
 
     response.data.bestMatches.forEach((element: any) => {
