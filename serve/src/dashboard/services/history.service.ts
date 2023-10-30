@@ -1,5 +1,5 @@
 import * as moment from 'moment';
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { GetHistoryDTO, HistoryDTO } from '../dto/history.dto';
 
@@ -8,12 +8,25 @@ export class HistoryService {
   constructor(private readonly httpService: HttpService) {}
 
   async execute(symbol: string, getHistory: GetHistoryDTO): Promise<any> {
+    const startDate = moment(getHistory.start_date, 'MM-DD-YYYY');
+    const endDate = moment(getHistory.end_date, 'MM-DD-YYYY');
+
+    if (symbol === '') {
+      return new BadRequestException('Symbol should not be empty');
+    }
+
+    if (!startDate.isValid()) {
+      return new BadRequestException('Invalid start date');
+    }
+
+    if (!endDate.isValid()) {
+      return new BadRequestException('Invalid end date');
+    }
+
     const response = await this.httpService.axiosRef.get(
       `&function=TIME_SERIES_DAILY&symbol=${symbol}`,
     );
 
-    const startDate = moment(getHistory.start_date, 'MM/DD/YYYY');
-    const endDate = moment(getHistory.end_date, 'MM/DD/YYYY');
     const dates = response.data['Time Series (Daily)'];
 
     const filteredDates = Object.entries(dates)

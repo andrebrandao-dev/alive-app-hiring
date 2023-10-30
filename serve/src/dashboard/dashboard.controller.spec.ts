@@ -61,11 +61,58 @@ describe('DashboardController', () => {
   });
 
   describe('history', () => {
+    it('should return invalid symbol', async () => {
+      const symbol: string = '';
+      const getHistory: GetHistoryDTO = {
+        start_date: '10-27-2023',
+        end_date: '10-27-2023',
+      };
+      const { response } = await dashboardController.history(
+        symbol,
+        getHistory,
+      );
+
+      expect(response.message).toBe('Symbol should not be empty');
+      expect(response.error).toBe('Bad Request');
+      expect(response.statusCode).toBe(400);
+    });
+
+    it('should return invalid start date', async () => {
+      const symbol: string = 'BA';
+      const getHistory: GetHistoryDTO = {
+        start_date: '27-10-2023',
+        end_date: '10-27-2023',
+      };
+      const { response } = await dashboardController.history(
+        symbol,
+        getHistory,
+      );
+      expect(response.message).toBe('Invalid start date');
+      expect(response.error).toBe('Bad Request');
+      expect(response.statusCode).toBe(400);
+    });
+
+    it('should return invalid end date', async () => {
+      const symbol: string = 'BA';
+      const getHistory: GetHistoryDTO = {
+        start_date: '10-27-2023',
+        end_date: '27-10-2023',
+      };
+      const { response } = await dashboardController.history(
+        symbol,
+        getHistory,
+      );
+
+      expect(response.message).toBe('Invalid end date');
+      expect(response.error).toBe('Bad Request');
+      expect(response.statusCode).toBe(400);
+    });
+
     it('should return a historyDTO list', async () => {
       const symbol: string = 'BA';
       const getHistory: GetHistoryDTO = {
-        start_date: '10/27/2023',
-        end_date: '10/27/2023',
+        start_date: '10-27-2023',
+        end_date: '10-27-2023',
       };
       const result = await dashboardController.history(symbol, getHistory);
 
