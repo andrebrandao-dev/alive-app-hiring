@@ -4,6 +4,7 @@ import { HttpModule } from '@nestjs/axios';
 import { SearchService } from './services/search.service';
 import { QuoteService } from './services/quote.service';
 import api from './api';
+import { HistoryService } from './services/history.service';
 
 @Module({
   imports: [
@@ -12,6 +13,6 @@ import api from './api';
     }),
   ],
   controllers: [DashboardController],
-  providers: [SearchService, QuoteService],
+  providers: [SearchService, QuoteService, HistoryService],
 })
 export class DashboardModule {}

@@ -4,3 +4,5 @@ GET http://localhost:3030/dashboard/search/ba
 ### Quote
 GET http://localhost:3030/dashboard/quote/BA
 
+### Quote History
+GET http://localhost:3030/dashboard/history/BA?start_date=10-27-2023&end_date=10-27-2023

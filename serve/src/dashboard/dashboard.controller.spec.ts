@@ -1,10 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { DashboardController } from './dashboard.controller';
-import { QuoteService } from './services/quote.service';
 import { SearchService } from './services/search.service';
+import { QuoteService } from './services/quote.service';
+import { HistoryService } from './services/history.service';
 import { SymbolDTO } from './dto/symbol.dto';
 import { HttpModule } from '@nestjs/axios';
 import api from './api';
+import { GetHistoryDTO } from './dto/history.dto';
 
 describe('DashboardController', () => {
   let dashboardController: DashboardController;
@@ -17,7 +19,7 @@ describe('DashboardController', () => {
         }),
       ],
       controllers: [DashboardController],
-      providers: [SearchService, QuoteService],
+      providers: [SearchService, QuoteService, HistoryService],
     }).compile();
 
     dashboardController = module.get<DashboardController>(DashboardController);
@@ -55,6 +57,24 @@ describe('DashboardController', () => {
       expect(result.previousClose).toBe('179.0900');
       expect(result.change).toBe('0.6000');
       expect(result.changePercent).toBe('0.3350%');
+    });
+  });
+
+  describe('history', () => {
+    it('should return a historyDTO list', async () => {
+      const symbol: string = 'BA';
+      const getHistory: GetHistoryDTO = {
+        start_date: '10/27/2023',
+        end_date: '10/27/2023',
+      };
+      const result = await dashboardController.history(symbol, getHistory);
+
+      expect(result[0].date).toBe('2023-10-27');
+      expect(result[0].open).toBe('180.0000');
+      expect(result[0].high).toBe('182.3299');
+      expect(result[0].low).toBe('179.0100');
+      expect(result[0].close).toBe('179.6900');
+      expect(result[0].volume).toBe('4606334');
     });
   });
 });
