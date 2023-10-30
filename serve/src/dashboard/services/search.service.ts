@@ -6,9 +6,8 @@ import { HttpService } from '@nestjs/axios';
 export class SearchService {
   constructor(private readonly httpService: HttpService) {}
 
-  execute(keywords: string): SymbolDTO[] {
-    console.log(keywords);
-    /* const response = await this.httpService.axiosRef.get(
+  async execute(keywords: string): Promise<SymbolDTO[]> {
+    const response = await this.httpService.axiosRef.get(
       `&function=SYMBOL_SEARCH&keywords=${keywords}`,
     );
 
@@ -26,21 +25,7 @@ export class SearchService {
         currency: element['8. currency'],
         matchScore: element['9. matchScore'],
       });
-    }); */
-
-    const symbols: SymbolDTO[] = [
-      {
-        symbol: 'BA',
-        name: 'Boeing Company',
-        type: 'Equity',
-        region: 'United States',
-        marketOpen: '09:30',
-        marketClose: '16:00',
-        timezone: 'UTC-04',
-        currency: 'USD',
-        matchScore: '1.0000',
-      },
-    ];
+    });
 
     return symbols;
   }

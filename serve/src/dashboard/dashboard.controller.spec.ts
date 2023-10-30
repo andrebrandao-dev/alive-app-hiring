@@ -23,9 +23,9 @@ describe('DashboardController', () => {
   });
 
   describe('search', () => {
-    it('should return a symbolDTO list', () => {
+    it('should return a symbolDTO list', async () => {
       const keywords: string = 'ba';
-      const result: SymbolDTO[] = dashboardController.search(keywords);
+      const result: SymbolDTO[] = await dashboardController.search(keywords);
 
       expect(result[0].symbol).toBe('BA');
       expect(result[0].name).toBe('Boeing Company');
@@ -38,4 +38,22 @@ describe('DashboardController', () => {
       expect(result[0].matchScore).toBe('1.0000');
     });
   });
+
+  /* describe('quote', () => {
+    it('should return a quoteDTO', () => {
+      const symbol: string = 'BA';
+      const result = dashboardController.quote(symbol);
+
+      expect(result.symbol).toBe('BA');
+      expect(result.open).toBe('241.0000');
+      expect(result.high).toBe('242.0000');
+      expect(result.low).toBe('238.0000');
+      expect(result.price).toBe('240.0000');
+      expect(result.volume).toBe('123456');
+      expect(result.latestTradingDay).toBe('2021-05-21');
+      expect(result.previousClose).toBe('239.0000');
+      expect(result.change).toBe('1.0000');
+      expect(result.changePercent).toBe('0.0042%');
+    });
+  }); */
 });

@@ -10,4 +10,9 @@ export class DashboardController {
   search(@Param('keywords') keywords: string) {
     return this.searchService.execute(keywords);
   }
+
+  /* @Get('quote/:symbol')
+  quote(@Param('symbol') symbol: string) {
+    return this.searchService.execute(symbol);
+  } */
 }
