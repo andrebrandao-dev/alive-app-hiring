@@ -8,16 +8,16 @@ export type HistoryProps = {
 };
 
 export class HistoryDTO {
-  constructor(props: HistoryProps) {
-    Object.assign(this, props);
-  }
-
   date: string;
   open: string;
   high: string;
   low: string;
   close: string;
   volume: string;
+
+  constructor(props: HistoryProps) {
+    Object.assign(this, props);
+  }
 }
 
 export class GetHistoryDTO {

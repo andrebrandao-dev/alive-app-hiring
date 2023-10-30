@@ -1,5 +1,8 @@
 ### N4KXLQI4AHXW2N75
 
+### teste
+GET http://localhost:3030/test
+
 ### Serch
 GET http://localhost:3030/dashboard/search/ba
 

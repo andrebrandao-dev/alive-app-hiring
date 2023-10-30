@@ -5,7 +5,7 @@ import { QuoteService } from './services/quote.service';
 import { HistoryService } from './services/history.service';
 import { SymbolDTO } from './dto/symbol.dto';
 import { HttpModule } from '@nestjs/axios';
-import api from './api';
+import api from './url_api';
 import { GetHistoryDTO } from './dto/history.dto';
 
 describe('DashboardController', () => {

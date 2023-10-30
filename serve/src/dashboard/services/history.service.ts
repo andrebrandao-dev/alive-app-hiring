@@ -27,6 +27,13 @@ export class HistoryService {
       `&function=TIME_SERIES_DAILY&symbol=${symbol}`,
     );
 
+    if (
+      response.data.Information &&
+      response.data.Information.startsWith('Thank you for using Alpha Vantage!')
+    ) {
+      return new BadRequestException('Apikey limit reached');
+    }
+
     const dates = response.data['Time Series (Daily)'];
 
     const filteredDates = Object.entries(dates)

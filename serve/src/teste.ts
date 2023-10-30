@@ -1,4 +1,4 @@
-export type SymbolData = {
+type MatchData = {
   '1. symbol': string;
   '2. name': string;
   '3. type': string;
@@ -10,7 +10,7 @@ export type SymbolData = {
   '9. matchScore': string;
 };
 
-export class SymbolDTO {
+export class Match {
   symbol: string;
   name: string;
   type: string;
@@ -21,7 +21,7 @@ export class SymbolDTO {
   currency: string;
   matchScore: string;
 
-  constructor(data: SymbolData) {
+  constructor(data: MatchData) {
     this.symbol = data['1. symbol'];
     this.name = data['2. name'];
     this.type = data['3. type'];
