@@ -20,7 +20,10 @@ export default function Header() {
       debounce(() => {
         setSearchLoading(true);
         setIsSearchOpen(true);
-        // Todo
+        setTimeout(() => {
+          setSearchLoading(false);
+          setSearchResult(data_search);
+        }, 1000);
       }, 500)();
     } else {
       setSearchResult([]);
@@ -38,6 +41,20 @@ export default function Header() {
     dispatch(setSelectedSearch(item));
     setIsSearchOpen(false);
   }
+
+  const data_search: Symbol[] = [
+    {
+      symbol: 'BA',
+      name: 'Boeing Co.',
+      type: 'string',
+      region: 'string',
+      marketOpen: 'string',
+      marketClose: 'string',
+      timezone: 'string',
+      currency: 'string',
+      matchScore: 'string',
+    }
+  ]
 
   return (
     <header className={ styles.wrap }>

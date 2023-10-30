@@ -14,22 +14,20 @@ interface RootState {
 
 export default function Home() {
   const selectedSearch = useSelector((state: RootState) => state.search.selectedSearch);
-  console.log(selectedSearch);
   return (
     <>
       <HeadingPage params={{ text: 'Home Dashboard' }}>
         <LuHome />
       </HeadingPage>
-      <div className="mt-8 border w-full">
-        {
-          selectedSearch && (
-            <Card>
-              <span>{ selectedSearch.name }</span>
-              <span>{ selectedSearch.symbol }</span>
-            </Card>
-          )
-        }
-      </div>
+      
+      {
+        selectedSearch && (
+          <Card>
+            <span>{ selectedSearch.name }</span>
+            <span>{ selectedSearch.symbol }</span>
+          </Card>
+        )
+      }
     </>
   )
 }
