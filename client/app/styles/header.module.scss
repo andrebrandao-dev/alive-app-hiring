@@ -25,8 +25,54 @@
     text-sm 
     text-gray-700 
     bg-white 
-    rounded-md 
+    rounded-t-md
+    border
+    border-transparent 
     focus:outline-none 
-    focus:border-blue-500
+    focus:border-cyan-600
+    focus:border-opacity-40
     appearance-none
+}
+
+.searchInputFullRounded {
+  @apply
+    searchInput
+    rounded-md
+}
+
+.searchOptions {
+  @apply
+    absolute 
+    top-full 
+    left-0 
+    w-full 
+    bg-white 
+    rounded-b-md 
+    border 
+    border-t-0 
+    border-cyan-600 
+    border-opacity-50 
+    shadow-md 
+    z-10
+    overflow-auto
+    max-h-32
+}
+
+.searchLoading {
+  @apply text-cyan-600 flex items-center p-2
+}
+
+.searchItem {
+  @apply
+    flex 
+    items-center
+    justify-between 
+    px-2 
+    py-3 
+    text-sm 
+    text-gray-700 
+    hover:bg-gray-100 
+    hover:text-gray-900 
+    cursor-pointer
+    even:bg-gray-50
 }
