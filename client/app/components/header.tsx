@@ -1,31 +1,26 @@
 'use client'
 
 import Avatar from './avatar';
-import { LuSearch, LuLoader2, LuCheckCircle, LuCircle } from "react-icons/lu";
-import styles from '../styles/header.module.scss';
+import { LuSearch, LuLoader2 } from 'react-icons/lu';
+import { Symbol, setSelectedSearch } from '../store/searchSlice';
 import { useState } from 'react';
-import { debounce, set } from 'lodash';
-
-type Search = {
-  symbol: string,
-  name: string,
-}
+import { debounce } from 'lodash';
+import { useDispatch } from 'react-redux';
+import styles from '../styles/header.module.scss';
 
 export default function Header() {
+  const dispatch = useDispatch();
+
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchLoading, setSearchLoading] = useState(false);
-  const [searchResult, setSearchResult] = useState<Search[]>([]);
-  const [selectedSearch, setSelectedSearch] = useState<Search | null>(null);
+  const [searchResult, setSearchResult] = useState<Symbol[]>([]);
 
   const handleSearch = (e: any): void => {
     if(e.target.value.length > 1) {
       debounce(() => {
         setSearchLoading(true);
         setIsSearchOpen(true);
-        setTimeout(() => {
-          setSearchLoading(false);
-          setSearchResult(data_search);
-        }, 1000);
+        // Todo
       }, 500)();
     } else {
       setSearchResult([]);
@@ -39,26 +34,10 @@ export default function Header() {
     }, 300);
   }
 
-  const handleClickSearchItem = (item: Search): void => {
-    console.log(item);
-    setSelectedSearch(item);
+  const handleClickSearchItem = (item: Symbol): void => {
+    dispatch(setSelectedSearch(item));
     setIsSearchOpen(false);
   }
-
-  const data_search = [
-    {
-      symbol: 'BA',
-      name: 'Boeing Co.',
-    },
-    {
-      symbol: 'AAPL',
-      name: 'Apple Inc.',
-    },
-    {
-      symbol: 'TSLA',
-      name: 'Tesla Inc.',
-    }
-  ]
 
   return (
     <header className={ styles.wrap }>
