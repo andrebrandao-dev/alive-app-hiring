@@ -31,19 +31,22 @@ export class HistoryService {
       response.data.Information &&
       response.data.Information.startsWith('Thank you for using Alpha Vantage!')
     ) {
+      console.log(response.data.Information);
       return new BadRequestException('Apikey limit reached');
     }
 
     const dates = response.data['Time Series (Daily)'];
 
+    console.log(dates);
+
     const filteredDates = Object.entries(dates)
       .filter(
         ([date]) =>
-          moment(date, 'YYYY-MM-DD') >= startDate &&
-          moment(date, 'YYYY-MM-DD') <= endDate,
+          moment(date, 'YYYY-MM-DD') <= startDate &&
+          moment(date, 'YYYY-MM-DD') >= endDate,
       )
       .map(([date, values]) => ({
-        date,
+        date: moment(date, 'YYYY-MM-DD').format('MM-DD-YYYY'),
         open: values['1. open'],
         high: values['2. high'],
         low: values['3. low'],

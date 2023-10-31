@@ -1,11 +1,11 @@
 export class GainLossDTO {
-  current: string;
-  consulting: string;
+  current: number;
+  consulting: number;
   gain: boolean;
 
   constructor(current: string, consulting: string) {
-    this.current = current;
-    this.consulting = consulting;
+    this.current = +current;
+    this.consulting = +consulting;
     this.setGain(+current, +consulting);
   }
 

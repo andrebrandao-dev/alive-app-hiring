@@ -7,6 +7,10 @@ export class SearchService {
   constructor(private readonly httpService: HttpService) {}
 
   async execute(keywords: string): Promise<any> {
+    if (keywords.length < 2) {
+      return new BadRequestException('Keywords must be at least 2 characters');
+    }
+
     const response = await this.httpService.axiosRef.get(
       `&function=SYMBOL_SEARCH&keywords=${keywords}`,
     );

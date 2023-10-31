@@ -9,14 +9,19 @@ export type HistoryProps = {
 
 export class HistoryDTO {
   date: string;
-  open: string;
-  high: string;
-  low: string;
-  close: string;
-  volume: string;
+  open: number;
+  high: number;
+  low: number;
+  close: number;
+  volume: number;
 
   constructor(props: HistoryProps) {
-    Object.assign(this, props);
+    this.date = props.date;
+    this.open = +props.open;
+    this.high = +props.high;
+    this.low = +props.low;
+    this.close = +props.close;
+    this.volume = +props.volume;
   }
 }
 

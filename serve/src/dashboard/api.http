@@ -1,8 +1,5 @@
 ### N4KXLQI4AHXW2N75
 
-### teste
-GET http://localhost:3030/test
-
 ### Serch
 GET http://localhost:3030/dashboard/search/ba
 
@@ -13,7 +10,7 @@ GET http://localhost:3030/dashboard/quote/BA
 GET http://localhost:3030/dashboard/quote/BA/gainloss?date_consulting=10-27-2023
 
 ### Quote History
-GET http://localhost:3030/dashboard/history/BA?start_date=10-27-2023&end_date=10-27-2023
+GET http://localhost:3030/dashboard/history/BA?start_date=10-27-2023&end_date=10-22-2023
 
 ### Quote History Invalid Start Date
 GET http://localhost:3030/dashboard/history/BA?start_date=27-10-2023&end_date=10-27-2023
