@@ -11,6 +11,7 @@ import Button from '@/app/components/button';
 import { useState } from 'react';
 import HeadingData from '@/app/components/heading-data';
 import axios from '@/app/axios';
+import handleToast from '@/app/utils/handleToast';
 
 interface RootState {
   search: {
@@ -39,9 +40,9 @@ export default function GainLossPage() {
       dispatch(setGainLoss(response.data));
       setIsLoading(false);
     })
-    .catch((err) => {
-      console.log(err);
+    .catch((error) => {
       setIsLoading(false);
+      handleToast({ response: error.response });
     })
   }
 

@@ -5,6 +5,7 @@ import SideBar from '../components/sidebar'
 import Header from '../components/header'
 import { Provider } from 'react-redux'
 import { store } from '../store/store'
+import 'sweetalert2/src/sweetalert2.scss'
 
 export default function RootLayout({
   children,

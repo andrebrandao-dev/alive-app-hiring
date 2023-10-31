@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import HeadingData from '@/app/components/heading-data';
 import axios from '@/app/axios';
+import handleToast from '@/app/utils/handleToast';
 
 interface RootState {
   search: {
@@ -39,9 +40,9 @@ export default function ComparisonPage() {
         dispatch(setQuoteCompare(response.data));
         setIsLoadingCompare(false);
       })
-      .catch((err) => {
-        console.error(err);
+      .catch((error) => {
         setIsLoadingCompare(false);
+        handleToast({ response: error.response });
       })
   }
 

@@ -16,6 +16,8 @@ import { useRouter } from 'next/navigation';
 import { setQuote, setQuoteCompare } from '@/app/store/quoteSlice';
 import { setHistory } from '@/app/store/historySlice';
 import { setGainLoss } from '@/app/store/gainLossSlice';
+import handleToast from '../utils/handleToast';
+
 
 export interface RootState {
   app: {
@@ -45,7 +47,7 @@ export default function Header() {
         .catch((error) => {
           setSearchLoading(false);
           setSearchResult([]);
-          console.error(error);
+          handleToast({ response :error.response });
         });
         
       }, 500)();

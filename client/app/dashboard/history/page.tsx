@@ -19,6 +19,7 @@ import axios from '@/app/axios';
 import 'swiper/scss';
 import 'swiper/css/pagination';
 import '../../styles/swiper.scss'
+import handleToast from '@/app/utils/handleToast';
 
 interface RootState {
   search: {
@@ -50,9 +51,10 @@ export default function HistoryPage() {
       dispatch(setHistory(response.data));
       setIsLoading(false);
     })
-    .catch(() => {
+    .catch((error) => {
       dispatch(setHistory([]));
       setIsLoading(false);
+      handleToast({ response: error.response });
     })
   }
 

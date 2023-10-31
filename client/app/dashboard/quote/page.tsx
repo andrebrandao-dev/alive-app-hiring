@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 import HeadingData from '@/app/components/heading-data';
 import axios from '@/app/axios';
 import Button from '@/app/components/button';
+import handleToast from '@/app/utils/handleToast';
 
 export interface RootState {
   search: {
@@ -35,8 +36,8 @@ export default function QuotePage() {
       dispatch(setQuote(response.data));
     })
     .catch((error) => {
-      console.error(error);
-      setLoading(true);
+      setLoading(false);
+      handleToast({ response :error.response });
     });
   }
 
