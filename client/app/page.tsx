@@ -1,9 +1,19 @@
+'use client'
+
 import Link from 'next/link';
-import Avatar from './components/avatar';
-import Card from './components/card';
+import Avatar from '@/app/components/avatar';
+import Card from '@/app/components/card';
 import { LuSmile } from 'react-icons/lu'
+import Button from '@/app/components/button';
+import { useRouter } from 'next/navigation'
 
 export default function Home() {
+  const router = useRouter()
+
+  function handleLoginClick() {
+    router.push('/dashboard');
+  }
+
   return (
     <div className="w-screen h-screen flex items-center justify-center p-4">
       <div className="max-w-md text-center">
@@ -19,13 +29,9 @@ export default function Home() {
               We are happy to see you again
               <LuSmile className="inline-block text-cyan-600 ml-2" />
             </p>
-
-            <Link
-              href="/dashboard"
-              className="bg-cyan-600 p-3 px-6 rounded-lg text-white font-semibold cursor-pointer"
-            >
+            <Button params={{ theme: 'primary', type: 'button' }} onClick={handleLoginClick}>
               Login
-            </Link>
+            </Button>
           </div>
         </Card>
       </div>

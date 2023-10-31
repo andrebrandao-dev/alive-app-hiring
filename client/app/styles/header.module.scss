@@ -3,8 +3,10 @@
     bg-transparent 
     flex items-center 
     py-4 
-    px-6 
+    px-6
     justify-between
+    gap-2
+    md:gap-y-0 
 }
 
 .searchIcon {
@@ -19,7 +21,9 @@
 
 .searchInput {
   @apply
-    w-64 
+    w-full
+    max-w-xs
+    md:max-w-lg
     px-10 
     py-2 
     text-sm 
@@ -75,4 +79,18 @@
     hover:text-gray-900 
     cursor-pointer
     even:bg-gray-50
+}
+
+.toggleButton {
+  @apply
+    flex
+    items-center
+    lg:hidden
+    text-2xl
+    text-cyan-600
+    outline-0
+    active:text-cyan-950
+    transition-all
+    active:scale-90
+    md:hidden
 }

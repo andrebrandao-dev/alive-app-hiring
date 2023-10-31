@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import HeadingPage from '../components/heading-page';
 import { Symbol } from '../store/searchSlice';
 import { LuHome } from 'react-icons/lu';
-import Card from '../components/card';
+import HeadingData from '../components/heading-data';
 
 interface RootState {
   search: {
@@ -20,14 +20,7 @@ export default function Home() {
         <LuHome />
       </HeadingPage>
       
-      {
-        selectedSearch && (
-          <Card>
-            <span>{ selectedSearch.name }</span>
-            <span>{ selectedSearch.symbol }</span>
-          </Card>
-        )
-      }
+      <HeadingData params={ selectedSearch } />
     </>
   )
 }

@@ -1,0 +1,10 @@
+.text {
+  @apply
+  text-cyan-700 
+    flex
+    font-bold
+    items-center
+    text-2xl
+    md:text-3xl 
+    lg:text-4xl
+}

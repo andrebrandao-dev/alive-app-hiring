@@ -1,0 +1,13 @@
+.swiper-pagination {
+  @apply
+    relative
+    mt-4
+}
+
+.swiper-pagination-bullet {
+  @apply bg-cyan-600 opacity-100
+}
+
+/* .swiper-pagination-bullet-active {
+  @apply bg-cyan-600 opacity-100
+} */

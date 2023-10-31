@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import Card from '@/app/components/card';
 import Input from '@/app/components/inputs';
 import Button from '@/app/components/button';
-import { Quote, setQuote, setQuoteCompare } from '@/app/store/quoteSlice';
+import { Quote, setQuoteCompare } from '@/app/store/quoteSlice';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import HeadingData from '@/app/components/heading-data';
@@ -63,11 +63,11 @@ export default function ComparisonPage() {
       {
         selectedSearch && (
           <>
-            <div className="flex gap-4 items-end">
-              <div className="w-1/2">
+            <div className="flex gap-y-4 text-xs -mx-4 flex-wrap items-end">
+              <div className="w-full md:w-1/2 px-4">
                 <Input params={{ label: 'Quote', placeholder: 'Search to compare' }} />
               </div>
-                <div className="w-1/2">
+                <div className="w-full md:w-1/2 px-4 text-right md:text-left">
                   <Button params={{ type: 'button', theme: 'primary' }} onClick={handleTriggerCompare}>
                     {
                       isLoadingCompare ? (
@@ -82,16 +82,16 @@ export default function ComparisonPage() {
             </div>
             {
               quoteCompare && (
-                <div className="flex gap-4 text-sm text-gray-700 mt-4">
-                  <div className="w-1/2">
-                    <Card>
-                      <strong>{ quoteCompare.symbol }</strong>
+                <div className="flex gap-y-4 text-xs -mx-4 flex-wrap text-gray-600 mt-4">
+                  <div className="w-1/2 px-4">
+                    <Card params={{ border: 'bg-cyan-500' }}>
+                      <strong className="text-cyan-500">{ quoteCompare.symbol }</strong>
                       <span className="block">{ quoteCompare.price }</span>
                     </Card>
                   </div>
-                  <div className="w-1/2">
-                    <Card>
-                      <strong>{ quoteCompare.symbol }</strong>
+                  <div className="w-1/2 px-4">
+                    <Card params={{ border: 'bg-amber-500' }}>
+                      <strong className="text-cyan-500">{ quoteCompare.symbol }</strong>
                       <span className="block">{ quoteCompare.price }</span>
                     </Card>
                   </div>
@@ -101,7 +101,6 @@ export default function ComparisonPage() {
           </>
         )
       }
-
     </>
   )
 }

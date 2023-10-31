@@ -6,12 +6,14 @@ import searchslicer from './searchSlice';
 import quoteSlice from './quoteSlice';
 import historySlice from './historySlice';
 import gainLossSlice from './gainLossSlice';
+import appSlice from './appSlice';
 
 const initalState = {};
 
 const middleware = [thunk];
 
 const rootReducer = combineReducers({
+  app: appSlice,
   search: searchslicer,
   quote: quoteSlice,
   history: historySlice,

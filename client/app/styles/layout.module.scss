@@ -1,8 +1,12 @@
 @import './custom-variables.scss';
 
 .layout {
-  padding-left: $sidebar-size;
-  @apply py-4 pr-4
+  @media (min-width: 768px) {
+    padding-left: $sidebar-size;
+  }
+
+  @apply py-4 pr-0 pl-0 md:pr-4
+  
 }
 
 .main {
@@ -18,5 +22,5 @@
     bg-cover
     bg-no-repeat
     blur-md
-    opacity-10
+    opacity-20
 }

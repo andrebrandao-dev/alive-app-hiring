@@ -1,7 +1,15 @@
+.logoWrap {
+  @apply flex items-center py-0 md:py-4 px-3 text-sm md:text-xl
+}
+
+.logoIcon {
+  @apply text-cyan-600 text-xl md:text-3xl
+}
+
 .logoText {
   @apply
     ml-2 
-    py-2 
+    py-0 md:py-2 
     bg-clip-text
     font-bold 
     text-transparent 

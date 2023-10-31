@@ -1,7 +1,7 @@
 'use client'
 
 import HeadingPage from '@/app/components/heading-page';
-import { LuHistory, LuChevronLeft, LuChevronRight } from 'react-icons/lu';
+import { LuHistory } from 'react-icons/lu';
 import { Symbol } from '@/app/store/searchSlice';
 import { useSelector } from 'react-redux';
 import Card from '@/app/components/card';
@@ -13,10 +13,11 @@ import { useDispatch } from 'react-redux';
 import { History, setHistory } from '@/app/store/historySlice';
 import HeadingData from '@/app/components/heading-data';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules'
-import stylesNavigation from '@/app/styles/swiper-navigation.module.scss';
+import { Pagination } from 'swiper/modules'
+
 import 'swiper/scss';
-import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import '../../styles/swiper.scss'
 
 interface RootState {
   search: {
@@ -62,14 +63,14 @@ export default function HistoryPage() {
 
       {
         selectedSearch && (
-          <div className="flex gap-4 items-end">
-            <div className="w-1/4">
+          <div className="flex gap-y-4 items-end -mx-4 flex-wrap">
+            <div className="w-1/2 lg:w-1/4 px-4">
               <Input params={{ label: 'Start date', placeholder: 'MM-DD-YYYY' }} />
             </div>
-            <div className="w-1/4">
+            <div className="w-1/2 lg:w-1/4 px-4">
               <Input params={{ label: 'End date', placeholder: 'MM-DD-YYYY' }} />
             </div>
-            <div className="w-2/4">
+            <div className="w-full lg:w-2/4 px-4 text-right lg:text-left">
               <Button params={{ type: 'button', theme: 'primary' }} onClick={handleTriggerSearch}>
                 {
                   isLoading && (
@@ -86,32 +87,33 @@ export default function HistoryPage() {
 
       {
         !!history.length && (
-          <div className="mt-8 relative">
+          <div className="mt-8 relative sm">
             <Swiper
               spaceBetween={16}
-              slidesPerView={4}
+              slidesPerView={1}
+              breakpoints={{  640: {slidesPerView: 2},  768: { slidesPerView: 2 }, 1024: { slidesPerView: 4 } }}
               grabCursor={true}
-              modules={[Navigation]}
-              navigation={{ nextEl: '.next', prevEl: '.prev' }}
+              pagination={{ dynamicBullets: true }}
+              modules={[Pagination]}
             >
               {
                 history.map((item: History, index: number) => (
                   <SwiperSlide key={index}>
-                    <Card>
-                      <div className="text-sm text-gray-700">
-                        <strong className="text-cyan-700 font-medium">{ item.date }</strong>
+                    <Card params={{ border: 'bg-cyan-500' }}>
+                      <div className="text-xs text-gray-600">
+                        <strong className="text-cyan-500 font-medium">{ item.date }</strong>
                         <div className="flex flex-wrap gap-y-1 mt-1">
                           <div className="w-full">
-                            <strong>Open</strong> { item.open }
+                            <strong className="mr-1 text-indigo-500">Open</strong> { item.open }
                           </div>
                           <div className="w-full">
-                            <strong>High</strong> { item.high }
+                            <strong className="mr-1 text-emerald-500">High</strong> { item.high }
                           </div>
                           <div className="full">
-                            <strong>Low</strong> { item.low }
+                            <strong className="mr-1 text-amber-500">Low</strong> { item.low }
                           </div>
-                          <div>
-                            <strong>Close</strong> { item.close }
+                          <div className="w-full">
+                            <strong className="mr-1 text-red-500">Close</strong> { item.close }
                           </div>
                       </div>
                       </div>
@@ -120,12 +122,6 @@ export default function HistoryPage() {
                 ))
               }
             </Swiper>
-            <div className={ `prev ${ stylesNavigation.navigation } ${ stylesNavigation.prev }` }>
-              <LuChevronLeft />
-            </div>
-            <div className={ `next ${ stylesNavigation.navigation } ${ stylesNavigation.next }` }>
-              <LuChevronRight />
-            </div>
           </div>
         )
       }

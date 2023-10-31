@@ -9,6 +9,10 @@
     bg-transparent
     py-4 
     z-50
+    transition-all
+    bg-cyan-500
+    md:bg-transparent
+    md:translate-x-0
 }
 
 .navLink {
@@ -25,20 +29,45 @@
     rounded-tr-3xl  
     rounded-br-3xl
     transition-all
-    hover:text-cyan-700
-    hover:border-cyan-600
+    hover:text-cyan-950
+    hover:border-cyan-700
+    md:hover:text-cyan-700
+    md:hover:border-cyan-600
 }
 
 .navLinkActive {
   @apply
-    text-cyan-700
-    bg-cyan-500
+    text-cyan-950
+    md:text-cyan-700
+
+    bg-cyan-700
+    md:bg-cyan-500
+
     bg-opacity-20
-    border-cyan-600
+    md:bg-opacity-10
+    
+    border-cyan-700
+    md:border-cyan-600
 }
 
 .navIcon {
   @apply
     mr-2
     text-xl
+}
+
+.toggleButton {
+  @apply
+    flex
+    items-center
+    lg:hidden
+    text-2xl
+    text-cyan-950
+    outline-0
+    active:text-cyan-800
+    transition-all
+    active:scale-90
+    ml-auto
+    mr-4
+    md:hidden
 }

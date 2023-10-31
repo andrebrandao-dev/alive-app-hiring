@@ -1,7 +1,7 @@
 'use client'
 
 import HeadingPage from '@/app/components/heading-page';
-import { LuLoader2, LuWalletCards, LuArrowBigUp, LuArrowBigDown } from 'react-icons/lu';
+import { LuLoader2, LuWalletCards } from 'react-icons/lu';
 import { Symbol } from '@/app/store/searchSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import Card from '@/app/components/card';
@@ -50,11 +50,11 @@ export default function GainLossPage() {
       {
         selectedSearch && (
           <>
-            <div className="flex gap-4 items-end">
-              <div className="w-1/4">
-                <Input params={{ label: 'Date', placeholder: 'Date' }} />
+            <div className="flex gap-y-4 text-xs -mx-4 flex-wrap items-end">
+              <div className="w-full md:w-1/4 px-4">
+                <Input params={{ label: 'Date', placeholder: 'MM-DD-YYYY' }} />
               </div>
-              <div className="w-2/4">
+              <div className="w-full md:w-2/3 px-4 text-right md:text-left">
                 <Button params={{ type: 'button', theme: 'primary' }} onClick={handleTriggerGetGainLoss}>
                   {
                     isLoading && (
@@ -70,21 +70,15 @@ export default function GainLossPage() {
             {
               gainLoss && (
                 <div className="mt-8 text-sm text-gray-700">
-                  <Card>
+                  <Card params={{ border: gainLoss.gain ? 'bg-emerald-500' :'bg-red-500' }}>
                     <div className="flex flex-wrap gap-y-1 relative">
                       <div className="w-full"><strong className="mr-1">You paid</strong>{ gainLoss.consulting }</div>
                       <div className="w-full"><strong className="mr-1">Now</strong>{ gainLoss.current }</div>
                       {
                         gainLoss.gain && (
-                          <>
-                            <div className="w-full"><strong className="text-emerald-400">Gain</strong></div>
-                            <LuArrowBigUp className="absolute bottom-0 right-0 text-4xl opacity-25 text-emerald-400" />
-                          </>
+                          <div className="w-full"><strong className="text-emerald-400">Gain</strong></div>
                         ) || (
-                          <>
-                            <div className="w-full"><strong className="text-red-400">Loss</strong></div>
-                            <LuArrowBigDown className="absolute bottom-0 right-0 text-4xl opacity-25 text-red-400"/>
-                          </>
+                          <div className="w-full"><strong className="text-red-400">Loss</strong></div>
                         )
                       }
                     </div>
@@ -95,7 +89,6 @@ export default function GainLossPage() {
           </>
         )
       }
-
     </>
   )
 }
