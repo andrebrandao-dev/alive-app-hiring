@@ -4,7 +4,7 @@ import Avatar from './avatar';
 import { LuSearch, LuLoader2 } from 'react-icons/lu';
 import { Symbol, setSelectedSearch } from '@/app/store/searchSlice';
 import { useState } from 'react';
-import { debounce, set } from 'lodash';
+import { debounce, } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from '@/app/styles/header.module.scss';
 import Logo from './logo';
@@ -13,6 +13,9 @@ import { toggleMenuStatus } from '@/app/store/appSlice';
 import Link from 'next/link';
 import axios from '@/app/axios';
 import { useRouter } from 'next/navigation';
+import { setQuote, setQuoteCompare } from '@/app/store/quoteSlice';
+import { setHistory } from '@/app/store/historySlice';
+import { setGainLoss } from '@/app/store/gainLossSlice';
 
 export interface RootState {
   app: {
@@ -33,7 +36,7 @@ export default function Header() {
       debounce(() => {
         setSearchLoading(true);
         setIsSearchOpen(true);
-        
+        clearStorage();
         axios.get(`/dashboard/search/${ e.target.value  }`)
         .then((response) => {
           setSearchLoading(false);
@@ -52,6 +55,13 @@ export default function Header() {
     }
   }
 
+  const clearStorage = (): void => {
+    setQuote(null);
+    setQuoteCompare(null);
+    setHistory([]);
+    setGainLoss(null);
+  }
+
   const handleSearchBlur = (e: any): void => {
     setTimeout(() => {
       setIsSearchOpen(false);
@@ -67,8 +77,9 @@ export default function Header() {
     dispatch(toggleMenuStatus(!menuActived));
   }
 
-  const handleLogout = ():void => {
-    router.push('/dashboard');
+  const handleLogout = (): void => {
+    clearStorage();
+    router.push('/');
   }
 
   return (
@@ -130,7 +141,7 @@ export default function Header() {
           }
         </div>
         
-        <div style={{ height: '40px' } } onClick={handleLogout}>
+        <div className="cursor-pointer" style={{ height: '40px' } } onClick={handleLogout}>
           <Avatar />
         </div>
       </header>
