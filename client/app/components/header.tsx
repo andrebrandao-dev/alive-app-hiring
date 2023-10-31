@@ -11,6 +11,8 @@ import Logo from './logo';
 import { IoMenu } from 'react-icons/io5';
 import { toggleMenuStatus } from '@/app/store/appSlice';
 import Link from 'next/link';
+import axios from '@/app/axios';
+import { useRouter } from 'next/navigation';
 
 export interface RootState {
   app: {
@@ -19,6 +21,7 @@ export interface RootState {
 }
 export default function Header() {
   const dispatch = useDispatch();
+  const router = useRouter()
 
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchLoading, setSearchLoading] = useState(false);
@@ -30,11 +33,19 @@ export default function Header() {
       debounce(() => {
         setSearchLoading(true);
         setIsSearchOpen(true);
-        setTimeout(() => {
+        
+        axios.get(`/dashboard/search/${ e.target.value  }`)
+        .then((response) => {
           setSearchLoading(false);
-          setSearchResult(data_search);
-        }, 1000);
-      }, 300)();
+          setSearchResult(response.data);
+        })
+        .catch((error) => {
+          setSearchLoading(false);
+          setSearchResult([]);
+          console.error(error);
+        });
+        
+      }, 500)();
     } else {
       setSearchResult([]);
       setIsSearchOpen(false);
@@ -56,19 +67,9 @@ export default function Header() {
     dispatch(toggleMenuStatus(!menuActived));
   }
 
-  const data_search: Symbol[] = [
-    {
-      symbol: 'IBM',
-      name: 'International Business Machines Corp',
-      type: 'Equity',
-      region: 'United States',
-      marketOpen: '09:30',
-      marketClose: '16:00',
-      timezone: 'UTC-04',
-      currency: 'USD',
-      matchScore: '1.0000'
-    }
-  ]
+  const handleLogout = ():void => {
+    router.push('/dashboard');
+  }
 
   return (
     <>
@@ -129,7 +130,7 @@ export default function Header() {
           }
         </div>
         
-        <div style={{ height: '40px' } }>
+        <div style={{ height: '40px' } } onClick={handleLogout}>
           <Avatar />
         </div>
       </header>

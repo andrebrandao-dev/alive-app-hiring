@@ -10,6 +10,7 @@ import Input from '@/app/components/inputs';
 import Button from '@/app/components/button';
 import { useState } from 'react';
 import HeadingData from '@/app/components/heading-data';
+import axios from '@/app/axios';
 
 interface RootState {
   search: {
@@ -25,18 +26,27 @@ export default function GainLossPage() {
   const selectedSearch = useSelector((state: RootState) => state.search.selectedSearch);
   const gainLoss = useSelector((state: RootState) => state.gainLoss.gainLoss);
   const [isLoading, setIsLoading] = useState(false);
+  const [consultingDate, setConsultingDate] = useState('');
 
   function handleTriggerGetGainLoss() {
     setIsLoading(true);
-    setTimeout(() => {
-      const gainLossFetch: GainLoss = {
-        current: '1000',
-        consulting: '1500',
-        gain: false,
+    axios.get(`/dashboard/quote/${ selectedSearch?.symbol }/gainloss`, {
+      params: {
+        date_consulting: consultingDate,
       }
-      dispatch(setGainLoss(gainLossFetch));
+    })
+    .then((response) => {
+      dispatch(setGainLoss(response.data));
       setIsLoading(false);
-    }, 1000)
+    })
+    .catch((err) => {
+      console.log(err);
+      setIsLoading(false);
+    })
+  }
+
+  function handleSetConsultingDate(e: any) {
+    setConsultingDate(e.target.value)
   }
 
   return (
@@ -52,7 +62,11 @@ export default function GainLossPage() {
           <>
             <div className="flex gap-y-4 text-xs -mx-4 flex-wrap items-end">
               <div className="w-full md:w-1/4 px-4">
-                <Input params={{ label: 'Date', placeholder: 'MM-DD-YYYY' }} />
+                <Input
+                  params={{ label: 'Date', placeholder: 'MM-DD-YYYY' }}
+                  value={consultingDate}
+                  onChange={handleSetConsultingDate}
+                />
               </div>
               <div className="w-full md:w-2/3 px-4 text-right md:text-left">
                 <Button params={{ type: 'button', theme: 'primary' }} onClick={handleTriggerGetGainLoss}>

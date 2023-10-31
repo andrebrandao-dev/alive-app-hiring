@@ -7,7 +7,13 @@ type InputParams = {
   type?: string | 'text';
 }
 
-export default function Input ({params}: {params: InputParams}) {
+import { ChangeEvent } from 'react';
+
+export default function Input ({params, value, onChange}: {
+  params: InputParams,
+  value?: string | '',
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+}) {
   return (
     <>
       <label className="block relative">
@@ -21,8 +27,9 @@ export default function Input ({params}: {params: InputParams}) {
         <input
           type={ params.type }
           placeholder={ params.placeholder }
-          value={ params.value }
+          value={ value }
           className={ styles.input }
+          onChange={ onChange }
         />
       </label>
     </>

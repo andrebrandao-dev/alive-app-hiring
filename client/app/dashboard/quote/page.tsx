@@ -1,14 +1,16 @@
 'use client'
 
 import HeadingPage from '@/app/components/heading-page';
-import { LuBadgeDollarSign } from 'react-icons/lu';
+import { LuBadgeDollarSign, LuLoader2 } from 'react-icons/lu';
 import { useSelector } from 'react-redux';
 import { Symbol } from '@/app/store/searchSlice';
 import { Quote, setQuote } from '@/app/store/quoteSlice';
 import Card from '@/app/components/card';
 import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import HeadingData from '@/app/components/heading-data';
+import axios from '@/app/axios';
+import Button from '@/app/components/button';
 
 export interface RootState {
   search: {
@@ -23,28 +25,19 @@ export default function QuotePage() {
   const dispatch = useDispatch();
   const selectedSearch = useSelector((state: RootState) => state.search.selectedSearch);
   const quote = useSelector((state: RootState) => state.quote.quote);
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    if(!quote) {
-      const newQuote: Quote = {
-        symbol: 'BA',
-        open: '179.3100',
-        high: '184.1600',
-        low: '179.3100',
-        price: '182.3100',
-        volume: '5503027',
-        latestTradingDay: '2023-10-30',
-        previousClose: '179.6900',
-        change: '2.6200',
-        changePercent: '1.4581%',
-      };
-
-      saveQuote(newQuote);
-    }
-  });
-
-  function saveQuote(quote: Quote) {
-    dispatch(setQuote(quote));
+  function handleClickLoadQuote() {
+    setLoading(true);
+    axios.get(`/dashboard/quote/${ selectedSearch?.symbol }`)
+    .then((response) => {
+      setLoading(false);
+      dispatch(setQuote(response.data));
+    })
+    .catch((error) => {
+      console.error(error);
+      setLoading(true);
+    });
   }
 
   return (
@@ -56,7 +49,7 @@ export default function QuotePage() {
       <HeadingData params={ selectedSearch } />
 
       {
-        quote && (
+        quote ? (
           <div className="flex gap-y-4 text-xs -mx-4 flex-wrap text-gray-600">
             <div className="w-full md:w-1/3 px-4">
               <Card params={{ border: 'bg-cyan-500' }}>
@@ -86,6 +79,12 @@ export default function QuotePage() {
               </Card>
             </div>
           </div>
+        ) : selectedSearch && (
+          <Button params={{ type: 'button', theme: 'primary' }} onClick={handleClickLoadQuote}>
+            {
+              loading ? (<LuLoader2 className="animate-spin" />) : ( <>Load Quote</> )
+            }
+          </Button>
         )
       }
     </>

@@ -11,6 +11,7 @@ import { Quote, setQuoteCompare } from '@/app/store/quoteSlice';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import HeadingData from '@/app/components/heading-data';
+import axios from '@/app/axios';
 
 interface RootState {
   search: {
@@ -26,30 +27,26 @@ interface RootState {
 export default function ComparisonPage() {
   const dispatch = useDispatch();
   const selectedSearch = useSelector((state: RootState) => state.search.selectedSearch);
+  const quote = useSelector((state: RootState) => state.quote.quote);
   const quoteCompare = useSelector((state: RootState) => state.quote.quoteCompare);
   const [isLoadingCompare, setIsLoadingCompare] = useState(false);
+  const [symbolCompare, setSymbolCompare] = useState('');
 
   function handleTriggerCompare() {
     setIsLoadingCompare(true);
+    axios.get(`/dashboard/quote/${ symbolCompare.toUpperCase() }`)
+      .then((response) => {
+        dispatch(setQuoteCompare(response.data));
+        setIsLoadingCompare(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setIsLoadingCompare(false);
+      })
+  }
 
-    setTimeout(() => {
-      const newQuote: Quote = {
-        symbol: 'BA',
-        open: '179.3100',
-        high: '184.1600',
-        low: '179.3100',
-        price: '182.3100',
-        volume: '5503027',
-        latestTradingDay: '2023-10-30',
-        previousClose: '179.6900',
-        change: '2.6200',
-        changePercent: '1.4581%',
-      };
-  
-      dispatch(setQuoteCompare(newQuote));
-
-      setIsLoadingCompare(false);
-    }, 1000);
+  function handleSetSymbolCompare(e: any) {
+    setSymbolCompare(e.target.value)
   }
 
   return (
@@ -65,7 +62,11 @@ export default function ComparisonPage() {
           <>
             <div className="flex gap-y-4 text-xs -mx-4 flex-wrap items-end">
               <div className="w-full md:w-1/2 px-4">
-                <Input params={{ label: 'Quote', placeholder: 'Search to compare' }} />
+                <Input
+                  params={{ label: 'Quote', placeholder: 'Search to compare' }}
+                  value={ symbolCompare }
+                  onChange={ handleSetSymbolCompare}
+                />
               </div>
                 <div className="w-full md:w-1/2 px-4 text-right md:text-left">
                   <Button params={{ type: 'button', theme: 'primary' }} onClick={handleTriggerCompare}>
@@ -81,18 +82,30 @@ export default function ComparisonPage() {
 
             </div>
             {
-              quoteCompare && (
+              quoteCompare && quote && (
                 <div className="flex gap-y-4 text-xs -mx-4 flex-wrap text-gray-600 mt-4">
                   <div className="w-1/2 px-4">
                     <Card params={{ border: 'bg-cyan-500' }}>
-                      <strong className="text-cyan-500">{ quoteCompare.symbol }</strong>
-                      <span className="block">{ quoteCompare.price }</span>
+                      <strong className="text-cyan-500 text-lg">{ quote.symbol }</strong>
+
+                      <div className="flex flex-wrap gap-y-1 relative mt-2">
+                        <div className="w-full"><strong className="mr-1">Price</strong>{ quote.price }</div>
+                        <div className="w-full"><strong className="mr-1 text-indigo-500">Open</strong> { quote.open }</div>
+                        <div className="w-full"><strong className="mr-1 text-emerald-500">High</strong> { quote.high }</div>
+                        <div className="w-full"><strong className="mr-1 text-amber-500">Low</strong> { quote.low }</div>
+                      </div>
                     </Card>
                   </div>
-                  <div className="w-1/2 px-4">
+                  <div className="w-1/2 px-4 scale-90">
                     <Card params={{ border: 'bg-amber-500' }}>
-                      <strong className="text-cyan-500">{ quoteCompare.symbol }</strong>
-                      <span className="block">{ quoteCompare.price }</span>
+                      <strong className="text-cyan-500 text-lg">{ quoteCompare.symbol }</strong>
+
+                      <div className="flex flex-wrap gap-y-1 relative mt-2">
+                        <div className="w-full"><strong className="mr-1">Price</strong>{ quoteCompare.price }</div>
+                        <div className="w-full"><strong className="mr-1 text-indigo-500">Open</strong> { quoteCompare.open }</div>
+                        <div className="w-full"><strong className="mr-1 text-emerald-500">High</strong> { quoteCompare.high }</div>
+                        <div className="w-full"><strong className="mr-1 text-amber-500">Low</strong> { quoteCompare.low }</div>
+                      </div>
                     </Card>
                   </div>
                 </div>

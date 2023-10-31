@@ -14,6 +14,7 @@ import { History, setHistory } from '@/app/store/historySlice';
 import HeadingData from '@/app/components/heading-data';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules'
+import axios from '@/app/axios';
 
 import 'swiper/scss';
 import 'swiper/css/pagination';
@@ -33,24 +34,34 @@ export default function HistoryPage() {
 
   const selectedSearch = useSelector((state: RootState) => state.search.selectedSearch);
   const history = useSelector((state: RootState) => state.history.history);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   function handleTriggerSearch(e: any) {
     setIsLoading(true);
-    setTimeout(() => {
-      const historyFetch: History = {
-        date: '2023-10-27',
-        open: '180.0000',
-        high: '182.3299',
-        low: '179.0100',
-        close: '179.6900',
-        volume: '4606334',
+    axios.get(`/dashboard/history/${ selectedSearch?.symbol }`, {
+      params: {
+        start_date: startDate,
+        end_date: endDate,
       }
-
-      const historyList: History[] = [ historyFetch, historyFetch, historyFetch, historyFetch, historyFetch, historyFetch ];
-      dispatch(setHistory(historyList));
+    })
+    .then((response) => {
+      dispatch(setHistory(response.data));
       setIsLoading(false);
-    }, 1000);
+    })
+    .catch(() => {
+      dispatch(setHistory([]));
+      setIsLoading(false);
+    })
+  }
+
+  function setStartDateValue(e: any) {
+    setStartDate(e.target.value);
+  }
+
+  function setEndDateValue(e: any) {
+    setEndDate(e.target.value);
   }
 
   return (
@@ -65,10 +76,18 @@ export default function HistoryPage() {
         selectedSearch && (
           <div className="flex gap-y-4 items-end -mx-4 flex-wrap">
             <div className="w-1/2 lg:w-1/4 px-4">
-              <Input params={{ label: 'Start date', placeholder: 'MM-DD-YYYY' }} />
+              <Input
+                params={{ label: 'Start date', placeholder: 'MM-DD-YYYY' }}
+                value={ startDate }
+                onChange={setStartDateValue}
+              />
             </div>
             <div className="w-1/2 lg:w-1/4 px-4">
-              <Input params={{ label: 'End date', placeholder: 'MM-DD-YYYY' }} />
+              <Input
+                params={{ label: 'End date', placeholder: 'MM-DD-YYYY' }}
+                value={ endDate }
+                onChange={setEndDateValue}
+              />
             </div>
             <div className="w-full lg:w-2/4 px-4 text-right lg:text-left">
               <Button params={{ type: 'button', theme: 'primary' }} onClick={handleTriggerSearch}>
