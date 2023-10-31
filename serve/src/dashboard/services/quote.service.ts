@@ -8,7 +8,7 @@ export class QuoteService {
 
   async execute(symbol: string): Promise<any> {
     if (symbol === '') {
-      return new BadRequestException('Symbol is required');
+      throw new BadRequestException('Symbol is required');
     }
 
     const response = await this.httpService.axiosRef.get(
@@ -19,7 +19,7 @@ export class QuoteService {
       response.data.Information &&
       response.data.Information.startsWith('Thank you for using Alpha Vantage!')
     ) {
-      return new BadRequestException('Apikey limit reached');
+      throw new BadRequestException('Apikey limit reached');
     }
 
     const quote = new QuoteDTO(response.data['Global Quote']);

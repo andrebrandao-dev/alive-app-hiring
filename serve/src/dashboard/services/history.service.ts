@@ -12,25 +12,25 @@ export class HistoryService {
     const endDate = moment(getHistory.end_date, 'MM-DD-YYYY');
 
     if (symbol === '') {
-      return new BadRequestException('Symbol should not be empty');
+      throw new BadRequestException('Symbol should not be empty');
     }
 
     if (!startDate.isValid()) {
-      return new BadRequestException('Invalid start date');
+      throw new BadRequestException('Invalid start date');
     }
 
     if (!endDate.isValid()) {
-      return new BadRequestException('Invalid end date');
+      throw new BadRequestException('Invalid end date');
     }
 
     if (endDate > startDate) {
-      return new BadRequestException(
+      throw new BadRequestException(
         'End date cannot be greater than start date',
       );
     }
 
     if (startDate > moment()) {
-      return new BadRequestException('Start date cannot be greater than today');
+      throw new BadRequestException('Start date cannot be greater than today');
     }
 
     const response = await this.httpService.axiosRef.get(
@@ -42,7 +42,7 @@ export class HistoryService {
       response.data.Information.startsWith('Thank you for using Alpha Vantage!')
     ) {
       console.log(response.data.Information);
-      return new BadRequestException('Apikey limit reached');
+      throw new BadRequestException('Apikey limit reached');
     }
 
     const dates = response.data['Time Series (Daily)'];

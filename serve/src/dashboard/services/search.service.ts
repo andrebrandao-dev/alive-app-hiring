@@ -8,7 +8,7 @@ export class SearchService {
 
   async execute(keywords: string): Promise<any> {
     if (keywords.length < 2) {
-      return new BadRequestException('Keywords must be at least 2 characters');
+      throw new BadRequestException('Keywords must be at least 2 characters');
     }
 
     const response = await this.httpService.axiosRef.get(
@@ -19,7 +19,7 @@ export class SearchService {
       response.data.Information &&
       response.data.Information.startsWith('Thank you for using Alpha Vantage!')
     ) {
-      return new BadRequestException('Apikey limit reached');
+      throw new BadRequestException('Apikey limit reached');
     }
 
     const symbols: SymbolDTO[] = response.data.bestMatches.map(

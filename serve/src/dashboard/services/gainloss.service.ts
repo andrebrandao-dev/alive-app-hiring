@@ -9,12 +9,18 @@ export class GainLossService {
 
   async execute(symbol: string, query: GetGainLoss): Promise<any> {
     if (symbol === '') {
-      return new BadRequestException('Symbol should not be empty');
+      throw new BadRequestException('Symbol is required');
     }
 
     const date = moment(query.date_consulting, 'MM-DD-YYYY');
     if (!date.isValid()) {
-      return new BadRequestException('Invalid consulting date');
+      throw new BadRequestException('Invalid consulting date');
+    }
+
+    if (date.isAfter(moment())) {
+      throw new BadRequestException(
+        'Consulting date should be greater than today',
+      );
     }
 
     const [consulting, current] = await Promise.all([
