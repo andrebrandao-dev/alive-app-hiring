@@ -1,0 +1,28 @@
+.labelText {
+  @apply
+    block 
+    text-xs
+    font-medium 
+    -mb-2
+    ml-3
+    relative
+    z-10 
+    text-gray-600
+}
+
+.input {
+  @apply
+    px-4
+    w-full
+    py-2 
+    text-sm 
+    text-gray-700 
+    bg-white 
+    rounded-md
+    border
+    border-transparent 
+    focus:outline-none 
+    focus:border-cyan-600
+    focus:border-opacity-40
+    appearance-none
+}

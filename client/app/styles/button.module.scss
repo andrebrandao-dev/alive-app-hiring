@@ -1,0 +1,51 @@
+.button {
+  @apply
+    p-2
+    px-5
+    text-sm
+    rounded-lg
+    font-semibold
+    cursor-pointer
+}
+
+.primary {
+  @apply
+    button
+    bg-cyan-600
+    text-white
+}
+
+.secondary {
+  @apply
+    button
+    bg-slate-400
+    text-slate-700
+}
+
+.info {
+  @apply
+    button
+    bg-blue-500
+    text-blue-200
+}
+
+.danger {
+  @apply
+    button
+    bg-red-500
+    text-red-200
+}
+
+.warning {
+  @apply
+    button
+    bg-amber-400
+    text-amber-100
+}
+
+.success {
+  @apply
+    button
+    bg-emerald-400
+    text-emerald-100
+}
