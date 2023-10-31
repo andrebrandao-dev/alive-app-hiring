@@ -1,6 +1,6 @@
 'use client'
 
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import Link from 'next/link';
 import styles from '@/app/styles/sidebar.module.scss'
 import Logo from './logo';
@@ -18,6 +18,7 @@ export interface RootState {
 
 
 export default function SideBar() {
+  const router = useRouter()
   const dispatch = useDispatch()
   const pathname = usePathname()
   const menuItems = [ 
@@ -28,11 +29,16 @@ export default function SideBar() {
   ]
 
   const menuActived = useSelector((state: RootState) => state.app.menuActived);
+  
+  const handleChangeView = (view: string):void =>  {
+    router.push(view);
+    dispatch(toggleMenuStatus(!menuActived))
+  }
 
   return (
     <aside className={ `${ menuActived ? 'translate-x-0' : '-translate-x-full' } ${ styles.sidebar }` }>
 
-      <Link href="/dashboard" className="hiddn md:block">
+      <Link href="/dashboard" className="hidden md:block">
         <h1>
           <Logo />
         </h1>
@@ -46,13 +52,14 @@ export default function SideBar() {
         <ul className="flex gap-y-8 flex-wrap">
           { menuItems.map((item, index) => (
             <li className="w-9/12" key={ index }>
-              <Link 
-                href={ item.to }
+              <button 
+                type="button"
                 className={ `${ styles.navLink } ${ pathname === item.to ? styles.navLinkActive : '' } }` }
+                onClick={ () => handleChangeView(item.to) }
               >
                 { item.icon }
                 <span>{ item.text }</span>
-              </Link>
+              </button>
             </li>
           ))}
         </ul>
