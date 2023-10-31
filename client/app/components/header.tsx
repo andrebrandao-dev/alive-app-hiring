@@ -34,7 +34,7 @@ export default function Header() {
           setSearchLoading(false);
           setSearchResult(data_search);
         }, 1000);
-      }, 500)();
+      }, 300)();
     } else {
       setSearchResult([]);
       setIsSearchOpen(false);
@@ -114,10 +114,10 @@ export default function Header() {
                             className={ `${ styles.searchItem } }` }
                             onClick={ () => handleClickSearchItem(item) }
                           >
-                            <strong>
+                            <strong className={styles.searchItemSymbol}>
                               { item.symbol }
                             </strong>
-                            <span>{ item.name }</span>
+                            <span className={ styles.searchItemName }>{ item.name }</span>
                           </li>
                         ))
                       }

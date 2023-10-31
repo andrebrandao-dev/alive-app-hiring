@@ -70,15 +70,29 @@
   @apply
     flex 
     items-center
-    justify-between 
+    justify-between
+    flex-wrap 
     px-2 
     py-3 
-    text-sm 
+    text-xs
     text-gray-700 
     hover:bg-gray-100 
     hover:text-gray-900 
     cursor-pointer
     even:bg-gray-50
+}
+
+.searchItemSymbol {
+  @apply w-3/12 truncate block
+}
+
+.searchItemName {
+  @apply
+    w-9/12
+    truncate
+    text-right
+    block
+    text-gray-500
 }
 
 .toggleButton {
