@@ -9,7 +9,6 @@ import Card from '@/app/components/card';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import HeadingData from '@/app/components/heading-data';
-import * as moment from 'moment';
 
 export interface RootState {
   search: {
