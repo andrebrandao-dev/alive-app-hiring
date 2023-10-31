@@ -23,6 +23,16 @@ export class HistoryService {
       return new BadRequestException('Invalid end date');
     }
 
+    if (endDate > startDate) {
+      return new BadRequestException(
+        'End date cannot be greater than start date',
+      );
+    }
+
+    if (startDate > moment()) {
+      return new BadRequestException('Start date cannot be greater than today');
+    }
+
     const response = await this.httpService.axiosRef.get(
       `&function=TIME_SERIES_DAILY&symbol=${symbol}`,
     );

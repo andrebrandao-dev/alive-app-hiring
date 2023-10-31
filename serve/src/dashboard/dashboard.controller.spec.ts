@@ -8,6 +8,7 @@ import api from './url_api';
 import { GetHistoryDTO } from './dto/history.dto';
 import { GetGainLoss } from './dto/gainloss';
 import { GainLossService } from './services/gainloss.service';
+import * as moment from 'moment';
 
 describe('DashboardController', () => {
   let dashboardController: DashboardController;
@@ -76,6 +77,39 @@ describe('DashboardController', () => {
         getHistory,
       );
       expect(response.message).toBe('Invalid start date');
+      expect(response.error).toBe('Bad Request');
+      expect(response.statusCode).toBe(400);
+    });
+
+    it('should return end date cannot be greater than start date', async () => {
+      const symbol: string = 'BA';
+      const getHistory: GetHistoryDTO = {
+        start_date: '10-26-2023',
+        end_date: '10-27-2023',
+      };
+      const { response } = await dashboardController.history(
+        symbol,
+        getHistory,
+      );
+      expect(response.message).toBe(
+        'End date cannot be greater than start date',
+      );
+      expect(response.error).toBe('Bad Request');
+      expect(response.statusCode).toBe(400);
+    });
+
+    it('should return start date cannot be greater than today', async () => {
+      const symbol: string = 'BA';
+      const today = moment().add(1, 'days').format('MM-DD-YYYY');
+      const getHistory: GetHistoryDTO = {
+        start_date: today,
+        end_date: '10-20-2023',
+      };
+      const { response } = await dashboardController.history(
+        symbol,
+        getHistory,
+      );
+      expect(response.message).toBe('Start date cannot be greater than today');
       expect(response.error).toBe('Bad Request');
       expect(response.statusCode).toBe(400);
     });
