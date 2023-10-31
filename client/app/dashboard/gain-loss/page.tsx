@@ -1,14 +1,15 @@
 'use client'
 
-import HeadingPage from '../../components/heading-page';
-import { LuLoader2, LuWalletCards } from 'react-icons/lu';
-import { Symbol } from '../../store/searchSlice';
+import HeadingPage from '@/app/components/heading-page';
+import { LuLoader2, LuWalletCards, LuArrowBigUp, LuArrowBigDown } from 'react-icons/lu';
+import { Symbol } from '@/app/store/searchSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import Card from '@/app/components/card';
 import { GainLoss, setGainLoss } from '@/app/store/gainLossSlice';
 import Input from '@/app/components/inputs';
 import Button from '@/app/components/button';
 import { useState } from 'react';
+import HeadingData from '@/app/components/heading-data';
 
 interface RootState {
   search: {
@@ -44,43 +45,57 @@ export default function GainLossPage() {
         <LuWalletCards />
       </HeadingPage>
 
-      <div className="flex gap-4 items-end">
-        <div className="w-1/4">
-          <Input params={{ label: 'Date', placeholder: 'Date' }} />
-        </div>
-        <div className="w-2/4">
-          <Button params={{ type: 'button', theme: 'primary' }} onClick={handleTriggerGetGainLoss}>
-            {
-              isLoading && (
-                <LuLoader2 className="animate-spin inline-block" />
-              ) || (
-                <span>Search</span>
-              )
-            }
-          </Button>
-        </div>
-      </div>
-
-      {
-        gainLoss && (
-          <div className="mt-8">
-            <Card>
-              <div><strong>Current</strong>{ gainLoss.current }</div>
-              <div><strong>Consulting</strong>{ gainLoss.consulting }</div>
-              <div><strong>Gain</strong>{ gainLoss.gain ? 'Gain' : 'Loss' }</div>
-            </Card>
-          </div>
-        )
-      }
+      <HeadingData params={ selectedSearch } />
 
       {
         selectedSearch && (
-          <Card>
-            <span>{ selectedSearch.name }</span>
-            <span>{ selectedSearch.symbol }</span>
-          </Card>
+          <>
+            <div className="flex gap-4 items-end">
+              <div className="w-1/4">
+                <Input params={{ label: 'Date', placeholder: 'Date' }} />
+              </div>
+              <div className="w-2/4">
+                <Button params={{ type: 'button', theme: 'primary' }} onClick={handleTriggerGetGainLoss}>
+                  {
+                    isLoading && (
+                      <LuLoader2 className="animate-spin inline-block" />
+                    ) || (
+                      <span>Search</span>
+                    )
+                  }
+                </Button>
+              </div>
+            </div>
+      
+            {
+              gainLoss && (
+                <div className="mt-8 text-sm text-gray-700">
+                  <Card>
+                    <div className="flex flex-wrap gap-y-1 relative">
+                      <div className="w-full"><strong className="mr-1">You paid</strong>{ gainLoss.consulting }</div>
+                      <div className="w-full"><strong className="mr-1">Now</strong>{ gainLoss.current }</div>
+                      {
+                        gainLoss.gain && (
+                          <>
+                            <div className="w-full"><strong className="text-emerald-400">Gain</strong></div>
+                            <LuArrowBigUp className="absolute bottom-0 right-0 text-4xl opacity-25 text-emerald-400" />
+                          </>
+                        ) || (
+                          <>
+                            <div className="w-full"><strong className="text-red-400">Loss</strong></div>
+                            <LuArrowBigDown className="absolute bottom-0 right-0 text-4xl opacity-25 text-red-400"/>
+                          </>
+                        )
+                      }
+                    </div>
+                  </Card>
+                </div>
+              )
+            }
+          </>
         )
       }
+
     </>
   )
 }

@@ -8,6 +8,8 @@ import { Quote, setQuote } from '@/app/store/quoteSlice';
 import Card from '@/app/components/card';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
+import HeadingData from '@/app/components/heading-data';
+import * as moment from 'moment';
 
 export interface RootState {
   search: {
@@ -52,29 +54,39 @@ export default function QuotePage() {
         <LuBadgeDollarSign />
       </HeadingPage>
 
-      {
-        selectedSearch && (
-          <Card>
-            <span>{ selectedSearch.name }</span>
-            <span>{ selectedSearch.symbol }</span>
-          </Card>
-        )
-      }
+      <HeadingData params={ selectedSearch } />
 
       {
         quote && (
-          <Card>
-            <div><strong>Symbol</strong> { quote.symbol }</div>
-            <div><strong>Open</strong> { quote.open }</div>
-            <div><strong>Hiht</strong> { quote.high }</div>
-            <div><strong>Low</strong> { quote.low }</div>
-            <div><strong>Price</strong> { quote.price }</div>
-            <div><strong>Volume</strong> { quote.volume }</div>
-            <div><strong>Lastest Trading Day</strong> { quote.latestTradingDay }</div>
-            <div><strong>Previous Close</strong> { quote.previousClose }</div>
-            <div><strong>Change</strong> { quote.change }</div>
-            <div><strong>Change Percent</strong> { quote.changePercent }</div>
-          </Card>
+          <div className="flex gap-4 text-gray-600">
+            <div className="w-1/3">
+              <Card>
+                <div>
+                  <div className="w-full"><strong className="mr-1">Open</strong> { quote.open }</div>
+                  <div className="w-full"><strong className="mr-1">High</strong> { quote.high }</div>
+                  <div className="w-full"><strong className="mr-1">Low</strong> { quote.low }</div>
+                </div>
+              </Card>
+            </div>
+            <div className="w-1/3">
+              <Card>
+                <div>
+                  <div className="w-full"><strong className="mr-1">Previous Close</strong> { quote.previousClose }</div>
+                  <div className="w-full"><strong className="mr-1">Change</strong> { quote.change }</div>
+                  <div className="w-full"><strong className="mr-1">Change Percent</strong> { quote.changePercent }</div>
+                </div>
+              </Card>
+            </div>
+            <div className="w-1/3">
+              <Card>
+                <div>
+                  <div className="w-full"><strong className="mr-1">Price</strong> { quote.price }</div>
+                  <div className="w-full"><strong className="mr-1">Volume</strong> { quote.volume }</div>
+                  <div className="w-full"><strong className="mr-1">Lastest Trading Day</strong> { quote.latestTradingDay }</div>
+                </div>
+              </Card>
+            </div>
+          </div>
         )
       }
     </>

@@ -1,11 +1,14 @@
 .button {
   @apply
-    p-2
-    px-5
-    text-sm
+    py-3
+    px-8
+    text-base
     rounded-lg
     font-semibold
     cursor-pointer
+    transition-all
+    active:scale-95
+    active:brightness-90
 }
 
 .primary {

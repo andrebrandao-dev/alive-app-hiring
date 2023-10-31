@@ -1,8 +1,8 @@
 'use client'
 
-import HeadingPage from '../../components/heading-page';
-import { LuHistory } from 'react-icons/lu';
-import { Symbol } from '../../store/searchSlice';
+import HeadingPage from '@/app/components/heading-page';
+import { LuHistory, LuChevronLeft, LuChevronRight } from 'react-icons/lu';
+import { Symbol } from '@/app/store/searchSlice';
 import { useSelector } from 'react-redux';
 import Card from '@/app/components/card';
 import Input from '@/app/components/inputs';
@@ -11,6 +11,12 @@ import { LuLoader2 } from 'react-icons/lu';
 import Button from '@/app/components/button';
 import { useDispatch } from 'react-redux';
 import { History, setHistory } from '@/app/store/historySlice';
+import HeadingData from '@/app/components/heading-data';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper/modules'
+import stylesNavigation from '@/app/styles/swiper-navigation.module.scss';
+import 'swiper/scss';
+import 'swiper/css/navigation';
 
 interface RootState {
   search: {
@@ -40,7 +46,7 @@ export default function HistoryPage() {
         volume: '4606334',
       }
 
-      const historyList: History[] = [ historyFetch ];
+      const historyList: History[] = [ historyFetch, historyFetch, historyFetch, historyFetch, historyFetch, historyFetch ];
       dispatch(setHistory(historyList));
       setIsLoading(false);
     }, 1000);
@@ -52,50 +58,74 @@ export default function HistoryPage() {
         <LuHistory />
       </HeadingPage>
 
-      <div className="flex gap-4 items-end">
-        <div className="w-1/4">
-          <Input params={{ label: 'Start date', placeholder: 'Start date' }} />
-        </div>
-        <div className="w-1/4">
-          <Input params={{ label: 'End date', placeholder: 'End date' }} />
-        </div>
-        <div className="w-2/4">
-          <Button params={{ type: 'button', theme: 'primary' }} onClick={handleTriggerSearch}>
-            {
-              isLoading && (
-                <LuLoader2 className="animate-spin inline-block" />
-              ) || (
-                <span>Search</span>
-              )
-            }
-          </Button>
-        </div>
-      </div>
+      <HeadingData params={ selectedSearch } />
 
       {
         selectedSearch && (
-          <Card>
-            <span>{ selectedSearch.name }</span>
-            <span>{ selectedSearch.symbol }</span>
-          </Card>
+          <div className="flex gap-4 items-end">
+            <div className="w-1/4">
+              <Input params={{ label: 'Start date', placeholder: 'MM-DD-YYYY' }} />
+            </div>
+            <div className="w-1/4">
+              <Input params={{ label: 'End date', placeholder: 'MM-DD-YYYY' }} />
+            </div>
+            <div className="w-2/4">
+              <Button params={{ type: 'button', theme: 'primary' }} onClick={handleTriggerSearch}>
+                {
+                  isLoading && (
+                    <LuLoader2 className="animate-spin inline-block" />
+                  ) || (
+                    <span>Search</span>
+                  )
+                }
+              </Button>
+            </div>
+          </div>
         )
       }
 
       {
-        history.length  && (
-          <div className="mt-8">
-            <Card>
-              <div><strong>Date</strong> { history[0].date }</div>
-              <div><strong>Open</strong> { history[0].open }</div>
-              <div><strong>High</strong> { history[0].high }</div>
-              <div><strong>Low</strong> { history[0].low }</div>
-              <div><strong>Close</strong> { history[0].close }</div>
-              <div><strong>Volume</strong> { history[0].volume }</div>
-            </Card>
-          </div>
-        ) || (
-          <div className="mt-8">
-            <span>No history found yet.</span>
+        !!history.length && (
+          <div className="mt-8 relative">
+            <Swiper
+              spaceBetween={16}
+              slidesPerView={4}
+              grabCursor={true}
+              modules={[Navigation]}
+              navigation={{ nextEl: '.next', prevEl: '.prev' }}
+            >
+              {
+                history.map((item: History, index: number) => (
+                  <SwiperSlide key={index}>
+                    <Card>
+                      <div className="text-sm text-gray-700">
+                        <strong className="text-cyan-700 font-medium">{ item.date }</strong>
+                        <div className="flex flex-wrap gap-y-1 mt-1">
+                          <div className="w-full">
+                            <strong>Open</strong> { item.open }
+                          </div>
+                          <div className="w-full">
+                            <strong>High</strong> { item.high }
+                          </div>
+                          <div className="full">
+                            <strong>Low</strong> { item.low }
+                          </div>
+                          <div>
+                            <strong>Close</strong> { item.close }
+                          </div>
+                      </div>
+                      </div>
+                    </Card>
+                  </SwiperSlide>
+                ))
+              }
+            </Swiper>
+            <div className={ `prev ${ stylesNavigation.navigation } ${ stylesNavigation.prev }` }>
+              <LuChevronLeft />
+            </div>
+            <div className={ `next ${ stylesNavigation.navigation } ${ stylesNavigation.next }` }>
+              <LuChevronRight />
+            </div>
           </div>
         )
       }

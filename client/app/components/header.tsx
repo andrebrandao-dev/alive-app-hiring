@@ -44,15 +44,15 @@ export default function Header() {
 
   const data_search: Symbol[] = [
     {
-      symbol: 'BA',
-      name: 'Boeing Co.',
-      type: 'string',
-      region: 'string',
-      marketOpen: 'string',
-      marketClose: 'string',
-      timezone: 'string',
-      currency: 'string',
-      matchScore: 'string',
+      symbol: 'IBM',
+      name: 'International Business Machines Corp',
+      type: 'Equity',
+      region: 'United States',
+      marketOpen: '09:30',
+      marketClose: '16:00',
+      timezone: 'UTC-04',
+      currency: 'USD',
+      matchScore: '1.0000'
     }
   ]
 

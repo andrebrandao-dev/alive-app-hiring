@@ -10,7 +10,7 @@ type InputParams = {
 export default function Input ({params}: {params: InputParams}) {
   return (
     <>
-      <label>
+      <label className="block relative">
         {
           params.label && (
             <span className={ styles.labelText }>

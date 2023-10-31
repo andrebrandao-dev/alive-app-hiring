@@ -3,18 +3,18 @@
     block 
     text-xs
     font-medium 
-    -mb-2
-    ml-3
-    relative
-    z-10 
+    absolute
+    top-2
+    left-4
     text-gray-600
 }
 
 .input {
   @apply
+    pt-7
+    pb-2
     px-4
     w-full
-    py-2 
     text-sm 
     text-gray-700 
     bg-white 

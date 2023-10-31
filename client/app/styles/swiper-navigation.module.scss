@@ -1,0 +1,23 @@
+.navigation {
+  @apply
+    w-8
+    h-8
+    flex
+    items-center
+    justify-center
+    border
+    text-2xl
+    absolute
+    top-1/2
+    transform
+    -translate-y-1/2
+    text-cyan-700
+}
+
+.next {
+  @apply right-0;
+}
+
+.prev {
+  @apply left-0;
+}

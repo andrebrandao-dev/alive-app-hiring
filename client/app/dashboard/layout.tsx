@@ -1,4 +1,5 @@
 'use client'
+
 import layout from '../styles/layout.module.scss'
 import SideBar from '../components/sidebar'
 import Header from '../components/header'
