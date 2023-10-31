@@ -26,6 +26,6 @@ export class SearchService {
       (element: any) => new SymbolDTO(element),
     );
 
-    return symbols;
+    return symbols.slice(0, 10);
   }
 }
